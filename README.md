@@ -1,6 +1,10 @@
 This tool (rfmt) will convert a parse or plan tree into a graphviz-formatted
 graph (which you can then process with, for example, the dot utility).
 
+To install GraphViz(contains dot utility) on RHEL or Centos, easy way:
+
+    yum install graphviz*
+
 To use this tool, run psql and do the following:
 
   1) `SET debug_print_parse = on`
