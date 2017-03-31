@@ -412,7 +412,7 @@ static int graphNode(dumpCtx *ctx, node *nodePtr, int myID)
                 if (ctx->options->skipNulls)
                     continue;
                 else
-                    fprintf(ctx->file, "%s%s=<>", delimiter, payload->name);
+                    fprintf(ctx->file, "%s%s=\\<\\>", delimiter, payload->name);
             }
             else if (payload->value->tokenType == T_NODE_BEG || payload->value->tokenType == T_LIST_BEG)
                 fprintf(ctx->file, "%s<%s>%s", delimiter, payload->name, payload->name);
@@ -487,10 +487,10 @@ static void dumpBranch(dumpCtx *ctx, node *node)
 
 static void dumpTree(dumpCtx *ctx, node *root)
 {
-    fprintf(ctx->file, "digraph AST\n{\n  node [shape=record,labeljust=\"l\"];\n");
+    fprintf(ctx->file, "digraph AST\n{\n  node [shape=record,labeljust=\"l\",fontsize=\"11.0\"];\n");
 
     if (ctx->options->title)
-        fprintf(ctx->file, "  graph [label=\"%s\",nojustify=\"true\",labeljust=\"l\"];\n", escape(ctx, ctx->options->title, 0));
+        fprintf(ctx->file, "  graph [label=\"%s\",nojustify=\"true\",labeljust=\"c\",labelloc=\"t\"];\n", escape(ctx, ctx->options->title, 0));
 
     if (ctx->options->onlyBranch)
         ctx->graph = false;
@@ -649,7 +649,7 @@ static node *parseAnnotation(const char *src, node *annotations)
 static void usage(const char *program, struct option *options)
 {
     fprintf(stderr, "usage:\n" );
-    fprintf(stderr, "  %s [options] [inputFile]\n", program );
+    fprintf(stderr, "  %s [options] [inputContent]\n", program );
     fprintf(stderr, "     or\n");
     fprintf(stderr, "  %s [options] < inputFile\n", program );
     fprintf(stderr, "\noptions := \n");
@@ -666,6 +666,7 @@ static void usage(const char *program, struct option *options)
 
     fprintf(stderr, "Examples:\n");
     fprintf(stderr, "  %s --statement=\"SELECT * FROM foo\" < /tmp/parsetree\n", program);
+    fprintf(stderr, "  %s --statement=\"Title\" '{NODENAME:alias(\"Test\")}'\n", program);
     fprintf(stderr, "  %s --highlight=3:fillcolor=red,style=filled -a \"5:round()\" < /tmp/parsetree\n", program);
     fprintf(stderr, "  %s -s \"SELECT * FROM foo\" < /tmp/parsetree | dot -T pdf > /tmp/parse.pdf\n", program);
 }

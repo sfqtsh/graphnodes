@@ -2,6 +2,7 @@
 *.c
 *.h
 !rfmt.h
+rfmt
 *.txt
 *.pdf
 *.svg
